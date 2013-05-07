@@ -3,11 +3,10 @@
  * Will use ... sort algorithm.
  */
 class Sort {
-    public Sort() {
+    public Sort(int numberOfThreads, String fileToSort, String outputFile) {
+       System.out.println(numberOfThreads + " " + fileToSort + " " + outputFile); 
     }
     public static void main (String [] args) {
-        int numberOfThreads = args[0];
-        String fileToSort = args[1];
-        String outputFile = args[2];
+        new Sort(args[0], args[1], args[2]);
     }
 }
