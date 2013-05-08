@@ -22,7 +22,7 @@ class Sort {
 			System.out.println("E. nschlmnt. ");
 			System.exit(3);
 		}
-
+		new Sorter(strings);
     }
     public static void main (String [] args) {
         new Sort(Integer.parseInt(args[0]), args[1], args[2]);
