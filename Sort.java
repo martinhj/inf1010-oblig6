@@ -7,6 +7,6 @@ class Sort {
        System.out.println(numberOfThreads + " " + fileToSort + " " + outputFile); 
     }
     public static void main (String [] args) {
-        new Sort(args[0], args[1], args[2]);
+        new Sort(Integer.getInteger(args[0]), args[1], args[2]);
     }
 }
