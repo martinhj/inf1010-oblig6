@@ -4,7 +4,6 @@ package logic;
  */
 public class Sorter {
 	public Sorter(String [] strings) {
-		for (String s: strings)
-			System.out.println(s);
+		
 	}
 }
