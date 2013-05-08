@@ -23,8 +23,7 @@ class Sort {
 			System.out.println("E. nschlmnt. ");
 			System.exit(3);
 		}
-
-		new Sorter(numberOfThreads, strings);
+		strings = new Sorter(numberOfThreads, strings).getArray();
     }
     public static void main (String [] args) {
         new Sort(Integer.parseInt(args[0]), args[1], args[2]);
