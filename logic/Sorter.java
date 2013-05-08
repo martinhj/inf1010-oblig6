@@ -4,7 +4,9 @@ package logic;
  */
 public class Sorter {
 	String [] array;
+	int numberOfThreads;
 	public Sorter(int numberOfThreads, String [] strings) {
+		this.numberOfThreads = numberOfThreads;
 		array = strings;
 	}
 	/**
