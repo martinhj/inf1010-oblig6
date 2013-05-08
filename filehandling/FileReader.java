@@ -38,7 +38,6 @@ class FileReader {
     	// jump to next line so that it is ready for reading strings.
     	sc.nextLine();
     	strings = new String [numberOfLines];
-    	System.out.println(strings.length);
     	for (int i = 0; i < numberOfLines; i++) {
     		strings[i] = sc.nextLine();
     	}
