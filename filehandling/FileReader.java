@@ -10,8 +10,9 @@ import util.ToManyElementsException;
  * This class reads a file with words. The first line is the numbers of lines.
  */
 class FileReader {
+    String [] strings;
     public FileReader(String filename) throws FileNotFoundException {
-    	readFile(filename);
+    	strings = readFile(filename);
     }
     /**
      * Creates a scanner object with a connected file.
@@ -41,11 +42,11 @@ class FileReader {
     	for (int i = 0; i < numberOfLines; i++) {
     		strings[i] = sc.nextLine();
     	}
-    	for (String s : strings)
-    		System.out.println(s);
     	// legge inn en ToManyElementsException og lage en warning hvis det er
     	// for mange elementer i fila.
-    	System.out.println(strings[0]);
     	return strings;
+    }
+    public String [] getStrings() {
+        return strings;
     }
 }
