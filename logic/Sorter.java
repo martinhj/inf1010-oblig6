@@ -2,5 +2,9 @@ package logic;
 /**
  * This class does the sorting.
  */
-class Sorter {
+public class Sorter {
+	public Sorter(String [] strings) {
+		for (String s: strings)
+			System.out.println(s);
+	}
 }
