@@ -21,13 +21,18 @@ class FileReader {
     /**
      * 
      */
-    private void readFile(String filename) 
-    	throws FileNotFoundException, InputMismatchException {
+    private String [] readFile(String filename) throws FileNotFoundException
+    , InputMismatchException {
+    	String [] strings;
     	Scanner sc = openFile(filename);
-    		int numberOfLines = (sc.nextInt());
-    	System.out.println(numberOfLines);
-    	/*while (sc.hasNextLine()) {
-    		System.out.println(sc.nextLine());
-    	}*/
+    	int numberOfLines = (sc.nextInt());
+    	strings = new String [numberOfLines];
+    	System.out.println(strings.length);
+    	for (int i = 0; i < numberOfLines; i++) {
+    		strings[i] = sc.nextLine();
+    	}
+    	for (String s : strings)
+    		System.out.println(s);
+    	return strings;
     }
 }
