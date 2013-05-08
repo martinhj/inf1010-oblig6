@@ -9,7 +9,7 @@ import util.ToManyElementsException;
 /**
  * This class reads a file with words. The first line is the numbers of lines.
  */
-class FileReader {
+public class FileReader {
     String [] strings;
     public FileReader(String filename) throws FileNotFoundException {
     	strings = readFile(filename);
