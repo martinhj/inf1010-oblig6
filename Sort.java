@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
  * Will use ... sort algorithm.
  */
 class Sort {
+	String [] sortedStrings;
     public Sort(int numberOfThreads, String fileToSort, String outputFile) {
     	String [] strings = new String [0];
 		try {
@@ -22,6 +23,7 @@ class Sort {
 			System.out.println("E. nschlmnt. ");
 			System.exit(3);
 		}
+
 		new Sorter(strings);
     }
     public static void main (String [] args) {
