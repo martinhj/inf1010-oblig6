@@ -15,10 +15,14 @@ public class Sorter {
 		this.array = strings;
 		arraysOfArrays = fillArrays(arraysOfArrays, readyArrays);
 		BinaryTree bt = new BinaryTree();
-		for (String s : arraysOfArrays[44])
+		for (String s : arraysOfArrays[0])
 			bt.add(s);
 		for (String s :bt.getArray())
 			System.out.println(s);
+		BinaryTree btee = new BinaryTree();
+		btee.add(arraysOfArrays[0]);
+		for (String s : new BinaryTree(arraysOfArrays[0]).getArray())
+			System.out.println(":. " + s);
 		// debug printout:::
 		/*for (String [] a: arraysOfArrays)
 			Arrays.sort(a);
