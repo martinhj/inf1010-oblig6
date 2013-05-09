@@ -1,19 +1,19 @@
 package logic;
+import java.util.ArrayList;
 /**
  * Class that recive an string and places it in a binary tree. 
  */
 public class BinaryTree {
 	Node startNode;
+	ArrayList<String> al = new ArrayList<String>();
 	public BinaryTree() {
 	}
 	/**
 	 * Places the binary tree into an array.
 	 */
 	public String [] getArray() {
-		return null;
-	}
-	public void printOut() {
-		startNode.printOut(0);
+		startNode.toArray(0);
+		return al.toArray(new String[0]);
 	}
 	private boolean lessThan(Node nodeOne, Node nodeTwo) {
 		if (nodeOne.value.compareTo(nodeTwo.value) < 0) return true;
@@ -34,8 +34,8 @@ private class Node {
 	/**
 	 * Adds a string to the binary tree.
 	 */
-	public void add(Node node) {
-		System.out.println("Adding:    " + node.value);
+	private void add(Node node) {
+		//System.out.println("Adding:    " + node.value);
 		if (lessThan(node, this)) {
 			if (left != null) left.add(node);
 			if (left == null) left = node;
@@ -45,11 +45,10 @@ private class Node {
 			if (right == null) right = node;
 		}
 	}
-	public int printOut(int index) {
-		if (left != null) index = left.printOut(index);
-		System.out.print(index++ + ": ");
-		if (value != null) System.out.println(value);
-		if (right != null) index = right.printOut(index);
+	private int toArray(int index) {
+		if (left != null) index = left.toArray(index);
+		if (value != null) al.add(index++, value);
+		if (right != null) index = right.toArray(index);
 		return index;
 	}
 }	
