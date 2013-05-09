@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java Sort 128 filehandling/names.txt out.txt
+java Sort 128 testfiles/names.txt out.txt
