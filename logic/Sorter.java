@@ -14,9 +14,6 @@ public class Sorter {
 		// denne trengs å endre til å bruke numberOfThreads og forholde seg til
 		// stringene::
 		arraysOfArrays = fillArrays(arraysOfArrays);
-		for (String [] ss: arraysOfArrays)
-			for (int i = 0; i < ss.length; i++)
-				System.out.println(ss[i]);
 		// 1. dele opp arrayet i like mange array som tråder
 		//		sette opp disse i et array med pekere til disse
 		//		sette opp et bool-array med true / false
