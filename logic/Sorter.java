@@ -14,7 +14,12 @@ public class Sorter {
 		this.numberOfThreads = numberOfThreads;
 		this.array = strings;
 		arraysOfArrays = fillArrays(arraysOfArrays, readyArrays);
-		for (String [] a: arraysOfArrays)
+		BinaryTree bt = new BinaryTree();
+		for (String s : arraysOfArrays[44])
+			bt.add(s);
+		bt.printOut();
+		// debug printout:::
+		/*for (String [] a: arraysOfArrays)
 			Arrays.sort(a);
 		int numbersOfWords = 0;
 		for (String [] a: arraysOfArrays) {
@@ -23,9 +28,9 @@ public class Sorter {
 				System.out.println(s);
 				numbersOfWords++;
 			}
-		}
+		}*/
 		System.out.println(":" + array.length);
-		System.out.println(numbersOfWords);
+		//System.out.println(numbersOfWords);
 		//ok 1. dele opp arrayet i like mange array som tråder
 		//ok		sette opp disse i et array med pekere til disse
 		//ok		sette opp et bool-array med true / false
@@ -75,7 +80,6 @@ public class Sorter {
 			newArray = new String [length];
 		for (int i = 0; i < length; i++)
 			newArray[i] = oldArray[start + i];
-		System.out.println(newArray.length);
 		return newArray;
 	}
 	private boolean beforeRest(int i) {
