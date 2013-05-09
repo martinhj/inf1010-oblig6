@@ -6,6 +6,7 @@ public class Sorter {
 	String [] array;
 	int numberOfThreads;
 	String [][] arraysOfArrays;
+	boolean [] readyArrays;
 	// for debugging
 		int numberOfArrays = 0;
 	public Sorter(int numberOfThreads, String [] strings) {
@@ -13,7 +14,7 @@ public class Sorter {
 		this.array = strings;
 		// denne trengs å endre til å bruke numberOfThreads og forholde seg til
 		// stringene::
-		arraysOfArrays = fillArrays(arraysOfArrays);
+		arraysOfArrays = fillArrays(arraysOfArrays, readyArrays);
 		// 1. dele opp arrayet i like mange array som tråder
 		//		sette opp disse i et array med pekere til disse
 		//		sette opp et bool-array med true / false
@@ -35,8 +36,12 @@ public class Sorter {
 	public String [] getArray() {
 		return array;
 	}
-	private String[][] fillArrays(String [][] allArrays) {
+	private String[][] fillArrays(String [][] allArrays, boolean [] readyArrays) {
+		readyArrays = new boolean[numberOfThreads];
+		for (boolean b : readyArrays)
+			b = false;
 		allArrays = new String[numberOfThreads][];
+		// skal dette gjøres med tråder?
 		for (int i = 0; i < array.length; i+=arrayLength()) {
 			if (beforeLastArray(i)) 
 				allArrays[whichArray(i)] = fillArray(array, arrayLength(), i);
