@@ -6,25 +6,18 @@ public class Sorter {
 	String [] array;
 	int numberOfThreads;
 	String [][] arraysOfArrays;
+	// for debugging
+		int numberOfArrays = 0;
 	public Sorter(int numberOfThreads, String [] strings) {
 		this.numberOfThreads = numberOfThreads;
 		array = strings;
 		// denne trengs å endre til å bruke numberOfThreads og forholde seg til
 		// stringene::
 		arraysOfArrays = new String[4][];
-		/*for (int i = 0; i < 79; i++) {
-			arraysOfArrays[i%19] = "" + i;
-			if (i % 19 == 0)
-				System.out.println("%19: " + i);
-			System.out.println(i / 19);
-		}*/
-		for (int i = 0; i < strings.length; i++) {
-			if (i % arrayLength() == 0 && i / arrayLength() < numberOfThreads - 1) {
-				fillArray(strings, arrayLength(), i);
+		for (int i = 0; i < strings.length; i+=numberOfArrays()) {
+			if (beforeLastArray(i)) fillArray(strings, arrayLength(), i);
+			if (lastArray(i)) fillArray(strings, lastArrayLength(), i);
 			}
-			if (i % arrayLength() == 0 && i / arrayLength() == numberOfThreads - 1)
-				fillArray(strings, arrayLength() + strings.length % numberOfThreads, i);
-		}
 		// 1. dele opp arrayet i like mange array som tråder
 		//		sette opp disse i et array med pekere til disse
 		//		sette opp et bool-array med true / false
@@ -38,12 +31,28 @@ public class Sorter {
 		//		bool-array med hvilken som er ferdig.
 		// 7. hvis ingen andre ferdige, vent
 		// 8. 
+		System.out.println(numberOfArrays);
 	}
 	/**
 	 * @return the sorted array.
 	 */
 	public String [] getArray() {
 		return array;
+	}
+
+	private int numberOfArrays() {
+		return array.length / numberOfThreads;
+	}
+	private boolean beforeLastArray(int i) {
+		if (i / arrayLength() < numberOfThreads - 1) return true;
+		return false;
+	}
+	private boolean lastArray(int i) {
+		if (i / arrayLength() == numberOfThreads - 1) return true;
+		return false;
+	}
+	private int lastArrayLength() {
+		return arrayLength() + array.length % numberOfThreads;
 	}
 	private int arrayLength() {
 		return array.length / numberOfThreads;
@@ -53,6 +62,7 @@ public class Sorter {
 		System.out.println("Length    : " + length);
 		System.out.println("Startpoint: " + start);
 		System.out.println("");
+		numberOfArrays++;
 		return null;
 	}
     private int [] fillArray(int [] oldArray, int length, int start) {
