@@ -17,7 +17,8 @@ public class Sorter {
 		BinaryTree bt = new BinaryTree();
 		for (String s : arraysOfArrays[44])
 			bt.add(s);
-		bt.printOut();
+		for (String s :bt.getArray())
+			System.out.println(s);
 		// debug printout:::
 		/*for (String [] a: arraysOfArrays)
 			Arrays.sort(a);
@@ -29,7 +30,7 @@ public class Sorter {
 				numbersOfWords++;
 			}
 		}*/
-		System.out.println(":" + array.length);
+		/*System.out.println(":" + array.length);*/
 		//System.out.println(numbersOfWords);
 		//ok 1. dele opp arrayet i like mange array som tråder
 		//ok		sette opp disse i et array med pekere til disse
@@ -46,9 +47,9 @@ public class Sorter {
 		//		bool-array med hvilken som er ferdig.
 		// 7. hvis ingen andre ferdige, vent
 		// 8. 
-		System.out.println(array.length);
+		/*System.out.println(array.length);
 		System.out.println(array.length % numberOfThreads);
-		System.out.println(numberOfArrays);
+		System.out.println(numberOfArrays);*/
 	}
 	/**
 	 * @return the sorted array.
