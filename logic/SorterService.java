@@ -1,3 +1,3 @@
-class SorterService extends Runnable {
-	
+class SorterService implements Runnable {
+	public void run() {}
 }
