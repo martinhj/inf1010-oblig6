@@ -9,17 +9,13 @@ public class Sorter {
 	int numberOfThreads;
 	String [][] arraysOfArrays;
 	boolean [] readyArrays;
-	// for debugging
-		int numberOfArrays = 0;
+	int numberOfArrays = 0;
 	public Sorter(int numberOfThreads, String [] strings) {
 		this.numberOfThreads = numberOfThreads;
 		this.array = strings;
-
-		// denne trengs å endre til å bruke numberOfThreads og forholde seg til
-		// stringene::
 		arraysOfArrays = fillArrays(arraysOfArrays, readyArrays);
-		/*for (String [] a: arraysOfArrays)
-			Arrays.sort(a);*/
+		for (String [] a: arraysOfArrays)
+			Arrays.sort(a);
 		int numbersOfWords = 0;
 		for (String [] a: arraysOfArrays) {
 			System.out.println("Her: ");
@@ -60,36 +56,16 @@ public class Sorter {
 		for (boolean b : readyArrays)
 			b = false;
 		allArrays = new String[numberOfThreads][];
-		// skal dette gjøres med tråder?
-	/*	for (int i = 0; i < array.length; i+=arrayLength()) {
-			if (beforeLastArray(i)) 
-				allArrays[whichArray(i)] = fillArray(array, arrayLength(), i);
-			if (lastArray(i)) 
-				allArrays[whichArray(i)] = fillArray(array, lastArrayLength(), i);
-		}*/
-
 		for (int i = 0; i < array.length; i+=arrayLength()) {
-			if (beforeLastArray(i)) {
-				System.out.println("Legger inn " + whichArray(i));
+			if (beforeRest(i))
 				allArrays[whichArray(i)] = fillArray(array, arrayLength(), i);
-			}
 		}
 		for (int i = 0; i < rest(); i++) {
-			System.out.println("Legger inn " + i);
-			System.out.println(allArrays[i].length);
 			allArrays[i][allArrays[i].length - 1] = array[array.length - rest()];
 		}
 		
 		return allArrays;
 	}
-
-	// 1. dele array i antallTråder deler
-	// 2. rest legges på de første rest antall tråder
-	// 3. de første rest antall trådene skal være lengde på 
-	// antallord / antalltråder + 1
-	// 4. alle tråder fylles
-	// 5. rest fyller et ord inn på siste plass i de første rest antall tråder
-
 	private String [] fillArray(String [] oldArray, int length, int start) {
 		numberOfArrays++;
 		String [] newArray = new String [0];
@@ -102,7 +78,7 @@ public class Sorter {
 		System.out.println(newArray.length);
 		return newArray;
 	}
-	private boolean beforeLastArray(int i) {
+	private boolean beforeRest(int i) {
 		if (i / arrayLength() < numberOfThreads) return true;
 		return false;
 	}
