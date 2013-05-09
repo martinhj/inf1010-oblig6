@@ -8,6 +8,9 @@ public class BinaryTree {
 	ArrayList<String> al = new ArrayList<String>();
 	public BinaryTree() {
 	}
+	public BinaryTree(String [] strings) {
+		add(strings);
+	}
 	/**
 	 * Places the binary tree into an array.
 	 */
@@ -15,14 +18,14 @@ public class BinaryTree {
 		startNode.toArray(0);
 		return al.toArray(new String[0]);
 	}
-	private boolean lessThan(Node nodeOne, Node nodeTwo) {
-		if (nodeOne.value.compareTo(nodeTwo.value) < 0) return true;
-		return false;
-	}
 	public void add(String string) {
 		Node node = new Node(string);
 		if (startNode != null) startNode.add(node);
 		if (startNode == null) startNode = node;
+	}
+	public void add(String [] strings) {
+		for (String s : strings)
+			add(s);
 	}
 private class Node {
 	Node left;
@@ -50,6 +53,10 @@ private class Node {
 		if (value != null) al.add(index++, value);
 		if (right != null) index = right.toArray(index);
 		return index;
+	}
+	private boolean lessThan(Node nodeOne, Node nodeTwo) {
+		if (nodeOne.value.compareTo(nodeTwo.value) < 0) return true;
+		return false;
 	}
 }	
 }
