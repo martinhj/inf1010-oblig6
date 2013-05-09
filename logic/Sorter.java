@@ -10,14 +10,13 @@ public class Sorter {
 		int numberOfArrays = 0;
 	public Sorter(int numberOfThreads, String [] strings) {
 		this.numberOfThreads = numberOfThreads;
-		array = strings;
+		this.array = strings;
 		// denne trengs å endre til å bruke numberOfThreads og forholde seg til
 		// stringene::
-		arraysOfArrays = new String[4][];
-		for (int i = 0; i < strings.length; i+=numberOfArrays()) {
-			if (beforeLastArray(i)) fillArray(strings, arrayLength(), i);
-			if (lastArray(i)) fillArray(strings, lastArrayLength(), i);
-			}
+		arraysOfArrays = fillArrays(arraysOfArrays);
+		for (String [] ss: arraysOfArrays)
+			for (int i = 0; i < ss.length; i++)
+				System.out.println(ss[i]);
 		// 1. dele opp arrayet i like mange array som tråder
 		//		sette opp disse i et array med pekere til disse
 		//		sette opp et bool-array med true / false
@@ -39,9 +38,22 @@ public class Sorter {
 	public String [] getArray() {
 		return array;
 	}
-
-	private int numberOfArrays() {
-		return array.length / numberOfThreads;
+	private String[][] fillArrays(String [][] allArrays) {
+		allArrays = new String[numberOfThreads][];
+		for (int i = 0; i < array.length; i+=arrayLength()) {
+			if (beforeLastArray(i)) 
+				allArrays[whichArray(i)] = fillArray(array, arrayLength(), i);
+			if (lastArray(i)) 
+				allArrays[whichArray(i)] = fillArray(array, lastArrayLength(), i);
+		}
+		return allArrays;
+	}
+	private String [] fillArray(String [] oldArray, int length, int start) {
+		String [] newArray = new String [length];
+		for (int i = 0; i < length; i++)
+			newArray[i] = oldArray[start + i];
+		numberOfArrays++;
+		return newArray;
 	}
 	private boolean beforeLastArray(int i) {
 		if (i / arrayLength() < numberOfThreads - 1) return true;
@@ -57,22 +69,7 @@ public class Sorter {
 	private int arrayLength() {
 		return array.length / numberOfThreads;
 	}
-	private String [] fillArray(String [] oldArray, int length, int start) {
-		System.out.println("...       : " + oldArray.length);
-		System.out.println("Length    : " + length);
-		System.out.println("Startpoint: " + start);
-		System.out.println("");
-		numberOfArrays++;
-		return null;
+	private int whichArray(int i) {
+		return i / arrayLength();
 	}
-    private int [] fillArray(int [] oldArray, int length, int start) {
-        //System.out.println("The old array's size: " + oldArray.length);
-        //System.out.println("Point to start: " + start);
-        int [] newArray = new int[length];
-        for (int i = 0; i < length; i++)
-            newArray[i] = oldArray[start + i];
-        //for (int i = start; i < length; i++)
-        //System.out.println("The new array's size: " + newArray.length);
-        return newArray;
-    }
 }
