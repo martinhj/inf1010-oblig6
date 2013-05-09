@@ -42,5 +42,10 @@ private class Node {
 			if (right != null) right.add(node);
 		}
 	}
+	public void printOut() {
+		if (left != null) left.printOut();
+		if (value != null) System.out.println(value);
+		if (right != null) right.printOut();
+	}
 }	
 }
