@@ -5,7 +5,6 @@ package logic;
 public class BinaryTree {
 	Node startNode;
 	public BinaryTree() {
-		startNode = new Node(null);
 	}
 	/**
 	 * Places the binary tree into an array.
@@ -13,14 +12,17 @@ public class BinaryTree {
 	public String [] getArray() {
 		return null;
 	}
-
+	public void printOut() {
+		startNode.printOut(0);
+	}
 	private boolean lessThan(Node nodeOne, Node nodeTwo) {
-		if (nodeOne.value.compareTo(nodeTwo.value) > 0) return true;
+		if (nodeOne.value.compareTo(nodeTwo.value) < 0) return true;
 		return false;
 	}
 	public void add(String string) {
 		Node node = new Node(string);
-		startNode.add(node);
+		if (startNode != null) startNode.add(node);
+		if (startNode == null) startNode = node;
 	}
 private class Node {
 	Node left;
@@ -33,19 +35,22 @@ private class Node {
 	 * Adds a string to the binary tree.
 	 */
 	public void add(Node node) {
+		System.out.println("Adding:    " + node.value);
 		if (lessThan(node, this)) {
-			if (left == null) left = node;
 			if (left != null) left.add(node);
+			if (left == null) left = node;
 		}
 		if (!lessThan(node, this)) {
-			if (right == null) right = node;
 			if (right != null) right.add(node);
+			if (right == null) right = node;
 		}
 	}
-	public void printOut() {
-		if (left != null) left.printOut();
+	public int printOut(int index) {
+		if (left != null) index = left.printOut(index);
+		System.out.print(index++ + ": ");
 		if (value != null) System.out.println(value);
-		if (right != null) right.printOut();
+		if (right != null) index = right.printOut(index);
+		return index;
 	}
 }	
 }
