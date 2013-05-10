@@ -14,15 +14,16 @@ public class Sorter {
 		this.numberOfThreads = numberOfThreads;
 		this.array = strings;
 		arraysOfArrays = fillArrays(arraysOfArrays, readyArrays);
-		BinaryTree bt = new BinaryTree();
-		for (String s : arraysOfArrays[0])
-			bt.add(s);
-		for (String s :bt.getArray())
-			System.out.println(s);
-		BinaryTree btee = new BinaryTree();
-		btee.add(arraysOfArrays[0]);
-		for (String s : new BinaryTree(arraysOfArrays[0]).getArray())
-			System.out.println(":. " + s);
+		
+		// Splitt opp i forskjellige tråder her.
+		for (int i = 0; i < arraysOfArrays.length; i++) {
+			arraysOfArrays[i] = sortArray(arraysOfArrays[i]);
+		}
+		// ta to arraytråder 
+
+		for (String [] sa : arraysOfArrays)
+			for (String s : sa)
+				System.out.println(":. " + s);
 		// debug printout:::
 		/*for (String [] a: arraysOfArrays)
 			Arrays.sort(a);
@@ -51,9 +52,6 @@ public class Sorter {
 		//		bool-array med hvilken som er ferdig.
 		// 7. hvis ingen andre ferdige, vent
 		// 8. 
-		/*System.out.println(array.length);
-		System.out.println(array.length % numberOfThreads);
-		System.out.println(numberOfArrays);*/
 	}
 	/**
 	 * @return the sorted array.
@@ -73,8 +71,10 @@ public class Sorter {
 		for (int i = 0; i < rest(); i++) {
 			allArrays[i][allArrays[i].length - 1] = array[array.length - rest()];
 		}
-		
 		return allArrays;
+	}
+	private String [] sortArray(String [] array) {
+		return new BinaryTree(array).getArray();
 	}
 	private String [] fillArray(String [] oldArray, int length, int start) {
 		numberOfArrays++;
