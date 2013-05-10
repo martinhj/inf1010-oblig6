@@ -1,29 +1,42 @@
 package logic;
 
-import java.util.Arrays;
+import java.util.HashMap;
 /**
  * This class does the sorting.
  */
 public class Sorter {
-	String [] array;
-	int numberOfThreads;
-	String [][] arraysOfArrays;
-	boolean [] readyArrays;
-	int numberOfArrays = 0;
+	private String [] allWordsUnsorted;
+	private int numbersOfWords;
+	private int numberOfThreads;
+	private String [][] arraysOfArrays;
+	private boolean [] readyArrays;
+	private int numberOfArrays = 0;
+    private SSLLcontainer<String,String> sortedWords =
+        new SSLLcontainer<String,String>();
+	private String [] allWordsSorted;
 	public Sorter(int numberOfThreads, String [] strings) {
 		this.numberOfThreads = numberOfThreads;
-		this.array = strings;
+		this.allWordsUnsorted = strings;
+		this.numbersOfWords = allWordsUnsorted.length;
 		arraysOfArrays = fillArrays(arraysOfArrays, readyArrays);
 		
 		// Splitt opp i forskjellige tråder her.
 		for (int i = 0; i < arraysOfArrays.length; i++) {
 			arraysOfArrays[i] = sortArray(arraysOfArrays[i]);
 		}
-		// ta to arraytråder 
+		allWordsSorted = new String [numbersOfWords];
+		int wordIndex = 0;
+		for (int i = 0; i < arraysOfArrays.length; i++)
+			for (int j = 0; j < arraysOfArrays[i].length; j++) {
+				System.out.println(arraysOfArrays[i][j]);
+                sortedWords.insert(arraysOfArrays[i][j], arraysOfArrays[i][j]);
+			}
+		for (int i = 0; i < sortedWords.size(); i++)
+			allWordsSorted[i] = sortedWords.get(i);
 
-		for (String [] sa : arraysOfArrays)
-			for (String s : sa)
-				System.out.println(":. " + s);
+		for (String s : allWordsSorted)
+				System.out.println(s);
+
 		// debug printout:::
 		/*for (String [] a: arraysOfArrays)
 			Arrays.sort(a);
@@ -53,23 +66,31 @@ public class Sorter {
 		// 7. hvis ingen andre ferdige, vent
 		// 8. 
 	}
+
+	private void insertInSortedArray(String [] insertArray, String wordToInsert) {
+		int i = 0;
+		while (insertArray[i++] != null) {
+			//if (wordToInsert.compareTo(insertArray[i]) > 0)
+		}
+	}
 	/**
 	 * @return the sorted array.
 	 */
 	public String [] getArray() {
-		return array;
+		return allWordsUnsorted;
 	}
 	private String[][] fillArrays(String [][] allArrays, boolean [] readyArrays) {
 		readyArrays = new boolean[numberOfThreads];
 		for (boolean b : readyArrays)
 			b = false;
 		allArrays = new String[numberOfThreads][];
-		for (int i = 0; i < array.length; i+=arrayLength()) {
+		for (int i = 0; i < numbersOfWords; i+=arrayLength()) {
 			if (beforeRest(i))
-				allArrays[whichArray(i)] = fillArray(array, arrayLength(), i);
+				allArrays[whichArray(i)] = fillArray(allWordsUnsorted, arrayLength(), i);
 		}
 		for (int i = 0; i < rest(); i++) {
-			allArrays[i][allArrays[i].length - 1] = array[array.length - rest()];
+			allArrays[i][allArrays[i].length - 1] = 
+				allWordsUnsorted[numbersOfWords - rest()];
 		}
 		return allArrays;
 	}
@@ -96,13 +117,13 @@ public class Sorter {
 		return false;
 	}
 	private int lastArrayLength() {
-		return arrayLength() + array.length % numberOfThreads;
+		return arrayLength() + numbersOfWords % numberOfThreads;
 	}
 	private int rest() {
-		return array.length % numberOfThreads;
+		return numbersOfWords % numberOfThreads;
 	}
 	private int arrayLength() {
-		return array.length / numberOfThreads;
+		return numbersOfWords / numberOfThreads;
 	}
 	private int whichArray(int i) {
 		return i / arrayLength();
