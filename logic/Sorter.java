@@ -21,25 +21,24 @@ public class Sorter {
 		arraysOfArrays = fillArrays(arraysOfArrays, readyArrays);
 		
 		// Splitt opp i forskjellige tråder her.
+		sortArrays(arraysOfArrays);
 		for (int i = 0; i < arraysOfArrays.length; i++) {
 			arraysOfArrays[i] = sortArray(arraysOfArrays[i]);
 		}
+		
+		
+		
+		
 		allWordsSorted = new String [numbersOfWords];
 		int wordIndex = 0;
 		for (int i = 0; i < arraysOfArrays.length; i++)
-			for (int j = 0; j < arraysOfArrays[i].length; j++) {
-				System.out.println(arraysOfArrays[i][j]);
+			for (int j = 0; j < arraysOfArrays[i].length; j++)
                 sortedWords.insert(arraysOfArrays[i][j], arraysOfArrays[i][j]);
-			}
-		for (int i = 0; i < sortedWords.size(); i++)
-			allWordsSorted[i] = sortedWords.get(i);
-
-		for (String s : allWordsSorted)
-				System.out.println(s);
+	//	for (String s : allWordsSorted)
+	//			System.out.println(s);
 
 		// debug printout:::
 		/*for (String [] a: arraysOfArrays)
-			Arrays.sort(a);
 		int numbersOfWords = 0;
 		for (String [] a: arraysOfArrays) {
 			System.out.println("Her: ");
@@ -67,7 +66,8 @@ public class Sorter {
 		// 8. 
 	}
 
-	private void insertInSortedArray(String [] insertArray, String wordToInsert) {
+	private void insertInSortedArray(String [] insertArray, String wordToInsert)
+	{
 		int i = 0;
 		while (insertArray[i++] != null) {
 			//if (wordToInsert.compareTo(insertArray[i]) > 0)
@@ -86,7 +86,8 @@ public class Sorter {
 		allArrays = new String[numberOfThreads][];
 		for (int i = 0; i < numbersOfWords; i+=arrayLength()) {
 			if (beforeRest(i))
-				allArrays[whichArray(i)] = fillArray(allWordsUnsorted, arrayLength(), i);
+				allArrays[whichArray(i)] =
+					fillArray(allWordsUnsorted, arrayLength(), i);
 		}
 		for (int i = 0; i < rest(); i++) {
 			allArrays[i][allArrays[i].length - 1] = 
@@ -94,9 +95,14 @@ public class Sorter {
 		}
 		return allArrays;
 	}
-	private String [] sortArray(String [] array) {
+	public String [] sortArray(String [] array) {
 		return new BinaryTree(array).getArray();
 	}
+	private String [][] sortArrays(String [][] allWords) {
+		new SorterMonitor(allWords, this).getArray();
+		return null;
+	}
+
 	private String [] fillArray(String [] oldArray, int length, int start) {
 		numberOfArrays++;
 		String [] newArray = new String [0];
