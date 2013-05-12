@@ -14,6 +14,7 @@ public class Sorter {
 		for (String s : allWordsUnsorted) System.out.println(s);
 		System.out.println("-------");
 		allWordsUnsorted = splitArray(allWordsUnsorted);
+		System.out.println("-------");
 		for (String s: allWordsUnsorted) System.out.println(s);
 
 		
@@ -25,23 +26,6 @@ public class Sorter {
 	public String [] getArray() {
 		return allWordsUnsorted;
 	}
-	private String[][] fillArrays(String [][] allArrays, boolean [] readyArrays)
-	{
-		readyArrays = new boolean[numberOfThreads];
-		for (boolean b : readyArrays)
-			b = false;
-		allArrays = new String[numberOfThreads][];
-		for (int i = 0; i < numberOfWords; i+=arrayLength()) {
-			if (beforeRest(i))
-				allArrays[whichArray(i)] =
-					fillArray(allWordsUnsorted, arrayLength(), i);
-		}
-		for (int i = 0; i < rest(); i++) {
-			allArrays[i][allArrays[i].length - 1] = 
-				allWordsUnsorted[numberOfWords - rest()];
-		}
-		return allArrays;
-	}
 	public String [] sortArray(String [] array) {
 		return new BinaryTree(array).getArray();
 	}
@@ -49,35 +33,17 @@ public class Sorter {
 		new SorterMonitor(allWords, this).getArray();
 		return null;
 	}
-
 	private String [] fillArray(String [] oldArray, int length, int start) {
 		String [] newArray = new String [length];
 			for (int i = 0; i < length; i++)
 				newArray[i] = oldArray[start + i];
 		return newArray;
 	}
-	private boolean beforeRest(int i) {
-		if (i / arrayLength() < numberOfThreads) return true;
-		return false;
-	}
-	private boolean lastArray(int i) {
-		if (i / arrayLength() == numberOfThreads - 1) return true;
-		return false;
-	}
-	private int lastArrayLength() {
-		return arrayLength() + numberOfWords % numberOfThreads;
-	}
-	private int rest() {
-		return numberOfWords % numberOfThreads;
-	}
 	private int arrayLength() {
 		return numberOfWords / numberOfThreads;
 	}
 	private int minArrayLength() {
 		return arrayLength() + 1;
-	}
-	private int whichArray(int i) {
-		return i / arrayLength();
 	}
 	/**
 	 * Splits the array in two recursively until it reaches the minimum length
