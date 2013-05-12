@@ -6,16 +6,17 @@ package logic;
 public class Sorter {
 	private int numberOfWords;
 	private int numberOfThreads;
+    private int testCount;
 	private String [] allWords;
+    /**
+     * Constructor for the Sorter class.
+     */
 	public Sorter(int numberOfThreads, String [] strings) {
 		this.numberOfThreads = numberOfThreads;
 		this.allWords = strings;
 		this.numberOfWords = allWords.length;
-		for (String s : allWords) System.out.println(s);
-		System.out.println("-------");
+        System.out.println(numberOfWords / numberOfThreads);
 		allWords = sortWords(allWords);
-		System.out.println("-------");
-		for (String s: allWords) System.out.println(s);
 	}
 	/**
 	 * @return the sorted array.
@@ -53,7 +54,7 @@ public class Sorter {
 	 * Splits the array in two recursively until it reaches the minimum length
 	 * of the arrays. Uses the method splitWords to call back to this method.
 	 */
-	protected String [] sortWords(String [] words) {
+	String [] sortWords(String [] words) {
 		if (words.length <= minArrayLength()) words = sortArray(words);
 		if (words.length > minArrayLength()) words = splitWords(words);
 		return words;
@@ -62,14 +63,17 @@ public class Sorter {
      * Splits an array and sends it to two new sortWords instances.
      */
     private String [] splitWords(String [] words) {
+        boolean debug = true;
+        //boolean debug = false;
         SorterService lastArrayService = 
-            new SorterService(sortWords(fillArray(words,false)), this);
+            new SorterService(fillArray(words,false), this);
         Thread sorterThread = new Thread(lastArrayService);
-        System.out.println(sorterThread.getState());
+        if (debug) System.out.println(sorterThread.getName() + "  " 
+            + sorterThread.getState());
         sorterThread.start();
-        System.out.println(sorterThread.getName());
         String [] firstArray = sortWords(fillArray(words,true));
-        System.out.println(Thread.currentThread().getName());
+        if (debug) System.out.println(sorterThread.getName() + "  " 
+            + sorterThread.getState());
         try {
             sorterThread.join();
         } catch (InterruptedException e) {
@@ -77,7 +81,8 @@ public class Sorter {
             System.exit(10);
         }
         String [] lastArray = lastArrayService.getArray();
-        System.out.println(sorterThread.getState());
+        if (debug) System.out.println(sorterThread.getName() + "  " 
+            + sorterThread.getState());
         return words = mergeArrays(firstArray, lastArray);
     }
     private int lArrayLength(String [] words) {
