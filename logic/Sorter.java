@@ -6,32 +6,25 @@ package logic;
 public class Sorter {
 	private int numberOfWords;
 	private int numberOfThreads;
-	private String [] allWordsUnsorted;
+	private String [] allWords;
 	public Sorter(int numberOfThreads, String [] strings) {
 		this.numberOfThreads = numberOfThreads;
-		this.allWordsUnsorted = strings;
-		this.numberOfWords = allWordsUnsorted.length;
-		for (String s : allWordsUnsorted) System.out.println(s);
+		this.allWords = strings;
+		this.numberOfWords = allWords.length;
+		for (String s : allWords) System.out.println(s);
 		System.out.println("-------");
-		allWordsUnsorted = splitArray(allWordsUnsorted);
+		allWords = sortWords(allWords);
 		System.out.println("-------");
-		for (String s: allWordsUnsorted) System.out.println(s);
-
-		
-
+		for (String s: allWords) System.out.println(s);
 	}
 	/**
 	 * @return the sorted array.
 	 */
 	public String [] getArray() {
-		return allWordsUnsorted;
+		return allWords;
 	}
 	public String [] sortArray(String [] array) {
 		return new BinaryTree(array).getArray();
-	}
-	private String [][] sortArrays(String [][] allWords) {
-		new SorterMonitor(allWords, this).getArray();
-		return null;
 	}
 	private String [] fillArray(String [] oldArray, int length, int start) {
 		String [] newArray = new String [length];
@@ -49,15 +42,15 @@ public class Sorter {
 	 * Splits the array in two recursively until it reaches the minimum length
 	 * of the arrays.
 	 */
-	public String [] splitArray(String [] words) {
+	public String [] sortWords(String [] words) {
 		if (words.length > minArrayLength()) {
 			String [] firstArray = fillArray(words, words.length / 2, 0);
-			firstArray = splitArray(firstArray);
+			firstArray = sortWords(firstArray);
 			String [] lastArray =
 			    fillArray(words,
                           words.length / 2 + words.length % 2,
                           words.length / 2);
-			lastArray = splitArray(lastArray);
+			lastArray = sortWords(lastArray);
 			words = mergeArrays(firstArray, lastArray);
 		}
 		if (words.length <= minArrayLength()) words = sortArray(words);
