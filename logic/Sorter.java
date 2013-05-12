@@ -23,7 +23,11 @@ public class Sorter {
 	public String [] getArray() {
 		return allWords;
 	}
-	public String [] sortArray(String [] array) {
+    /**
+     * Sorts the array with a binary tree algorithm.
+     * @return a sorted array.
+     */
+	private String [] sortArray(String [] array) {
 		return new BinaryTree(array).getArray();
 	}
 	private String [] fillArray(String [] oldArray, int length, int start) {
@@ -32,6 +36,13 @@ public class Sorter {
 				newArray[i] = oldArray[start + i];
 		return newArray;
 	}
+    private String [] fillArray(String [] words, boolean first) {
+        if (first)
+            return fillArray(words, lArrayLength(words), halfLength(words));
+        if (!first) return fillArray(words, halfLength(words), 0);
+        return null;
+    }
+
 	private int arrayLength() {
 		return numberOfWords / numberOfThreads;
 	}
@@ -42,23 +53,24 @@ public class Sorter {
 	 * Splits the array in two recursively until it reaches the minimum length
 	 * of the arrays.
 	 */
-	public String [] sortWords(String [] words) {
+	protected String [] sortWords(String [] words) {
 		if (words.length > minArrayLength()) {
-			String [] firstArray = fillArray(words, words.length / 2, 0);
-			firstArray = sortWords(firstArray);
-			String [] lastArray =
-			    fillArray(words,
-                          words.length / 2 + words.length % 2,
-                          words.length / 2);
-			lastArray = sortWords(lastArray);
+			String [] firstArray = sortWords(fillArray(words,true));
+			String [] lastArray = sortWords(fillArray(words,false));
 			words = mergeArrays(firstArray, lastArray);
 		}
 		if (words.length <= minArrayLength()) words = sortArray(words);
 		return words;
 	}
+    private int lArrayLength(String [] words) {
+        return words.length / 2 + words.length % 2;
+    }
+    private int halfLength(String [] words) {
+        return words.length / 2;
+    }
 	/**
 	 * Merge two sorted arrays into one sorted array.
-	 * @return a sorted array.
+	 * @return a sorted array if the argument arrays is sorted.
 	 */
 	private String [] mergeArrays(String [] firstArray, String [] lastArray) {
 		String [] sorted = new String [firstArray.length + lastArray.length];
