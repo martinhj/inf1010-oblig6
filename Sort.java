@@ -1,6 +1,7 @@
 import filehandling.*;
 import logic.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 /**
@@ -24,6 +25,13 @@ class Sort {
 			System.exit(3);
 		}
 		strings = new Sorter(numberOfThreads, strings).getArray();
+        try {
+            new WriteOutput(strings, outputFile);
+        } catch (IOException e) {
+            System.out.println("E. writeError. ");
+            System.exit(4);
+        }
+        
     }
     public static void main (String [] args) {
         new Sort(Integer.parseInt(args[0]), args[1], args[2]);
