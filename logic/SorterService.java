@@ -1,25 +1,16 @@
 package logic;
 class SorterService implements Runnable {
-    String [] array;
+    String [] words;
     Sorter sorter;
     int index;
-    boolean [] readyArrays;
-    public SorterService(String [] array, Sorter sorter,
-        boolean [] readyArrays, int index)
-    {
-        this.array = array;
+    public SorterService(String [] words, Sorter sorter) {
+        this.words = words;
         this.sorter = sorter;
-        this.index = index;
-        this.readyArrays = readyArrays;
     }
-        
 	public void run() {
-        array = sorter.sortArray(array);
-        for (String s: array) System.out.println(": " + s);
-        System.out.println("===");
-        readyArrays[index] = true;
+        words = sorter.sortWords(words);
     }
     public String [] getArray() {
-        return array;
+        return words;
     }
 }
