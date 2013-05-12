@@ -15,8 +15,11 @@ public class Sorter {
 		this.numberOfThreads = numberOfThreads;
 		this.allWords = strings;
 		this.numberOfWords = allWords.length;
-        System.out.println(numberOfWords / numberOfThreads);
+        long time = System.currentTimeMillis();
 		allWords = sortWords(allWords);
+        System.out.print("milliseconds to sort list: ");
+        System.out.print(System.currentTimeMillis() - time);
+        System.out.println(" with " + numberOfThreads + " threads.");
 	}
 	/**
 	 * @return the sorted array.
@@ -37,7 +40,7 @@ public class Sorter {
 				newArray[i] = oldArray[start + i];
 		return newArray;
 	}
-    private String [] fillArray(String [] words, boolean first) {
+    String [] fillArray(String [] words, boolean first) {
         if (first)
             return fillArray(words, lArrayLength(words), halfLength(words));
         if (!first) return fillArray(words, halfLength(words), 0);
@@ -63,10 +66,10 @@ public class Sorter {
      * Splits an array and sends it to two new sortWords instances.
      */
     private String [] splitWords(String [] words) {
-        boolean debug = true;
-        //boolean debug = false;
+        //boolean debug = true;
+        boolean debug = false;
         SorterService lastArrayService = 
-            new SorterService(fillArray(words,false), this);
+            new SorterService(words, this);
         Thread sorterThread = new Thread(lastArrayService);
         if (debug) System.out.println(sorterThread.getName() + "  " 
             + sorterThread.getState());
