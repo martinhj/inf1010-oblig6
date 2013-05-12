@@ -51,21 +51,16 @@ public class Sorter {
 	 */
 	public String [] splitArray(String [] words) {
 		if (words.length > minArrayLength()) {
-			String [] firstArray;
-			String [] lastArray;
-			firstArray = fillArray(words, words.length / 2, 0);
-			for (String s: firstArray) System.out.println(s);
-			System.out.println(":::");
+			String [] firstArray = fillArray(words, words.length / 2, 0);
 			firstArray = splitArray(firstArray);
-			lastArray = fillArray(words, words.length / 2 + words.length % 2, words.length / 2);
-			for (String s: lastArray) System.out.println(s);
-			System.out.println("::");
+			String [] lastArray =
+			    fillArray(words,
+                          words.length / 2 + words.length % 2,
+                          words.length / 2);
 			lastArray = splitArray(lastArray);
 			words = mergeArrays(firstArray, lastArray);
 		}
-		if (words.length <= minArrayLength()) {
-			words = sortArray(words);
-		}
+		if (words.length <= minArrayLength()) words = sortArray(words);
 		return words;
 	}
 	/**
