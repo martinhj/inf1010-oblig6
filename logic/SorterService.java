@@ -8,7 +8,7 @@ class SorterService implements Runnable {
         this.sorter = sorter;
     }
 	public void run() {
-        words = sorter.sortWords(words);
+        words = sorter.sortWords(sorter.fillArray(words,false));
     }
     public String [] getArray() {
         return words;
