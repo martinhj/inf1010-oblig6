@@ -62,8 +62,22 @@ public class Sorter {
      * Splits an array and sends it to two new sortWords instances.
      */
     private String [] splitWords(String [] words) {
+        SorterService lastArrayService = 
+            new SorterService(sortWords(fillArray(words,false)), this);
+        Thread sorterThread = new Thread(lastArrayService);
+        System.out.println(sorterThread.getState());
+        sorterThread.start();
+        System.out.println(sorterThread.getName());
         String [] firstArray = sortWords(fillArray(words,true));
-        String [] lastArray = sortWords(fillArray(words,false));
+        System.out.println(Thread.currentThread().getName());
+        try {
+            sorterThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.exit(10);
+        }
+        String [] lastArray = lastArrayService.getArray();
+        System.out.println(sorterThread.getState());
         return words = mergeArrays(firstArray, lastArray);
     }
     private int lArrayLength(String [] words) {
