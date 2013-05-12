@@ -51,17 +51,21 @@ public class Sorter {
 	}
 	/**
 	 * Splits the array in two recursively until it reaches the minimum length
-	 * of the arrays.
+	 * of the arrays. Uses the method splitWords to call back to this method.
 	 */
 	protected String [] sortWords(String [] words) {
-		if (words.length > minArrayLength()) {
-			String [] firstArray = sortWords(fillArray(words,true));
-			String [] lastArray = sortWords(fillArray(words,false));
-			words = mergeArrays(firstArray, lastArray);
-		}
 		if (words.length <= minArrayLength()) words = sortArray(words);
+		if (words.length > minArrayLength()) words = splitWords(words);
 		return words;
 	}
+    /**
+     * Splits an array and sends it to two new sortWords instances.
+     */
+    private String [] splitWords(String [] words) {
+        String [] firstArray = sortWords(fillArray(words,true));
+        String [] lastArray = sortWords(fillArray(words,false));
+        return words = mergeArrays(firstArray, lastArray);
+    }
     private int lArrayLength(String [] words) {
         return words.length / 2 + words.length % 2;
     }
