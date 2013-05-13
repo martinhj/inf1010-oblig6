@@ -24,8 +24,11 @@ public class WriteOutput {
 	void writeWords() throws IOException {
 		File file = new File(filename);
 			FileWriter fw 
-			= new FileWriter(file, true);
-			fw.write(createOutPut(words));
+			= new FileWriter(file);
+            System.out.println(words.length);
+            fw.write("" + words.length);
+            for (String s: words)
+                fw.write("\n" + s);
 			fw.close();
 	}
 	/**
