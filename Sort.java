@@ -1,3 +1,4 @@
+//trenger en sjekk på hvor mange tråder (skal være mellom 1 og 1000)
 import filehandling.*;
 import logic.*;
 import java.io.FileNotFoundException;
@@ -31,9 +32,14 @@ class Sort {
             System.out.println("E. writeError. ");
             System.exit(4);
         }
-        
     }
     public static void main (String [] args) {
-        new Sort(Integer.parseInt(args[0]), args[1], args[2]);
+        int numberOfThreads = Integer.parseInt(args[0]);
+        if (numberOfThreads <= 0 || numberOfThreads > 1000) {
+            System.out.println("E. Number of threads needs to be" 
+             + "between 1 and 1000");
+            System.exit(5);
+        }
+        new Sort(numberOfThreads, args[1], args[2]);
     }
 }
