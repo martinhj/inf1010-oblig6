@@ -66,8 +66,8 @@ public class Sorter {
      * Splits an array and sends it to two new sortWords instances.
      */
     private String [] splitWords(String [] words) {
-        //boolean debug = true;
-        boolean debug = false;
+        boolean debug = true;
+        //boolean debug = false;
         SorterService lastArrayService = 
             new SorterService(words, this);
         Thread sorterThread = new Thread(lastArrayService);
@@ -75,6 +75,7 @@ public class Sorter {
             + sorterThread.getState());
         sorterThread.start();
         String [] firstArray = sortWords(fillArray(words,true));
+        if (debug) System.out.println(sorterThread.activeCount());
         if (debug) System.out.println(sorterThread.getName() + "  " 
             + sorterThread.getState());
         try {
@@ -83,6 +84,7 @@ public class Sorter {
             e.printStackTrace();
             System.exit(10);
         }
+        if (debug) System.out.println(sorterThread.activeCount());
         String [] lastArray = lastArrayService.getArray();
         if (debug) System.out.println(sorterThread.getName() + "  " 
             + sorterThread.getState());
