@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
-import util.ToManyElementsException;
 /**
  * This class reads a file with words. The first line is the numbers of lines.
  */
