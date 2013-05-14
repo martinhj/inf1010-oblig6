@@ -1,0 +1,61 @@
+INF1010 - 2013v - OBLIG6 - martinhj
+
+Først vil jeg si at programmet aksepterer filer med for mange ord, men tar bare
+inn antall ord som det er angitt øverst i innfilen. Ellers avslutter programmet
+hvis det er for få ord osv.
+
+Videre vil jeg nevne at jeg har laget programmet slik at den rekursivt setter
+opp trådene den skal kjøre for å sortere filene. Jeg deler arrayet opp i to og
+rekursivt kaller opp igjen metoden med hvert array fram til lengden på arrayet
+metoden får inn er kortere enn antall ord / antall tråder + 1. For at det skal
+bli riktig antall tråder bruker det ene rekursive kallet opp igjen tråden
+metoden kalles fra og den andre starter opp i en ny tråd. Det blir riktig
+antall når main-tråden telles med (se nærmere på dette i logic/Sorter:sortWords
+og :splitWords).
+
+1. Hvilke operasjoner som kan gå i paralell og ikke: Selve innlesningen er
+vanskelig å gjøre i paralell da det uten mye locking blir feil rekkefølge i
+array det leses til og med så mye locking og overvåking av dette blir det mye
+overhead. Dette gjøres altså lineært.
+
+Oppdeling og sortering gjøres med tråder, men her kommer det ann på hvor mange
+tråder som blir brukt om dette er effektivt eller ikke. Jeg har brukt binary
+tree til å sortere ordene, som er ganske effektivt i seg selv.
+
+2. Kjøretid
+
+Har testet med antall tråder 10 ganger.
+
+På fila names.txt går sorteringen så fort at det er vanskelig å se noen klar
+tendens på hva som er mest effektivt utover at det går fortere med fler enn en
+tråd. Det kan se ut som det går litt tregere når trådantallet øker over et
+visst nivå, men variasjonene er for store mellom målinger med likt antall
+tråder og forskjellene mellom antall tråder er for små.
+
+Med fila sowpods.txt er noe større forskjeller. Fra mellom 543 og 796 og med en
+median på 581 til mellom 382 og 408 med en median på 393 for to tråder.
+
+16 tråder: Mellom 277 og 324 med en median på 285.  32 tråder: Mellom 263 og
+313 med en median på 285.
+
+128 tråder: Mellom 262 og 330 med en median på 273.
+
+1000 tråder: Mellom 358 og 419 med en medin på 379.
+
+Forskjellene mellom 16 og 128 tråder ser jeg på som så små at hvis jeg hadde
+regnet ut et normalavvik ville forskjellene forsvunnet.
+
+Målingene ellers (sowpods.txt): 1:      543, 560, 568, 572, 581, 599, 612, 620,
+796 2:      382, 387, 388, 390, 393, 393, 402, 405, 408
+
+4:      309, 312, 315, 316, 318, 319, 323, 341, 386 16:     277, 279, 282, 282,
+285, 290, 294, 308, 324 32:     263, 269, 274, 278, 285, 289, 292, 309, 313
+128:    262, 263, 263, 265, 273, 274, 285, 323, 330
+
+1000:   358, 361, 362, 370, 379, 400, 402, 410, 419
+
+Med fila linuxwords.txt er forskjellene litt større.  Det kan virke som det er
+en fordel å bruke flere tråder enn jeg har kjerner på maskinen. Dette tenker
+står i sammenheng med implementasjonen hvor trådene er avhengig av at to og to
+sorteringstråder er ferdige slik at de kan flettes sammen og at det slik sett
+er mulig at det er mer venting involvert ved færre tråder.
