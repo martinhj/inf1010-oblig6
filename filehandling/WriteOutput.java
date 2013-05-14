@@ -25,21 +25,9 @@ public class WriteOutput {
 		File file = new File(filename);
 			FileWriter fw 
 			= new FileWriter(file);
-            System.out.println(words.length);
             fw.write("" + words.length);
             for (String s: words)
                 fw.write("\n" + s);
 			fw.close();
-	}
-	/**
-	 * @return En string med alle løsningene.
-	 */
-	String createOutPut(String [] words) {
-		String outPut = "";
-        outPut += words.length + "\n";
-		for (int i = 0; i < words.length; i++) {
-            outPut += words[i] + "\n";
-		}
-		return outPut;
 	}
 }
